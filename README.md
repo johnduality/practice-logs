@@ -79,8 +79,7 @@ its author. This project keeps its footprint deliberately narrow:
   `.gitignore`. What ships is the labelled dataset (`logs.json`) — short quotations
   plus machine-generated summaries and tags, offered as commentary and indexing —
   and the page that renders it, rather than wholesale copies of the original posts.
-- Every record links back to its original public thread, rather than a copy.
-
+  
 If you are an author and would like your log removed or amended, please open an issue.
 
 ## Labelling schema
