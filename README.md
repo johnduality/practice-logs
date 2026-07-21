@@ -35,7 +35,7 @@ KFD).
 │   ├── process_payload.py       # captured payload  ->  formatted .txt log
 │   ├── build_index.py           # logs.json  ->  embedded into index.html
 │   └── subagent_prompt.md       # the labelling rubric + output schema (source of truth)
-└── Data/                   # raw scraped .txt logs — NOT committed (see Privacy)
+└── Data/                   # raw scraped .txt logs — NOT committed
 ```
 
 ## The pipeline
@@ -69,18 +69,14 @@ python3 Tools/build_index.py logs.json index.html
 This is the only build step. It rewrites the `const DATA = [...]` block inside
 `index.html` from `logs.json`; open the page afterward to confirm the row count.
 
-## Copyright & attribution
+## Sourcing & attribution
 
 These logs were written by their individual authors and posted publicly on the
-Dharma Overground and Kenneth Folk Dharma forums; copyright in each post stays with
-its author. This project claims no ownership of that underlying content, and keeps
-its footprint deliberately narrow:
-
-- The **raw scraped logs** (`Data/`) are **excluded** from this repository via
-  `.gitignore`. What ships is the labelled dataset (`logs.json`) — short quotations
-  plus machine-generated summaries and tags, offered as commentary and indexing —
-  and the page that renders it, rather than wholesale copies of the original posts.
-- Every record links back to its original public thread to avoid illegal copying.
+Dharma Overground and Kenneth Folk Dharma forums. This project keeps its footprint
+deliberately narrow: the **raw scraped logs** (`Data/`) are **excluded** from this
+repository via `.gitignore`, and what ships is the labelled dataset (`logs.json`) —
+short quotations plus machine-generated summaries and tags — and the page that
+renders it, rather than the full text of the original posts.
 
 If you are an author and would like your log removed or amended, please open an issue.
 

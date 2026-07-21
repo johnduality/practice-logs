@@ -144,6 +144,17 @@
   }
   .btn:hover{border-color:var(--blue); color:var(--blue)}
   .btn.is-active{background:var(--blue); border-color:var(--blue); color:#fff}
+  /* mobile-only "More" button that reveals the toolbar controls (hidden on desktop) */
+  .btn-more{
+    display:none; font-family:var(--serif); line-height:1;
+    padding:8px 12px; border-radius:999px;
+    border:1px solid var(--border); background:var(--surface); color:var(--text);
+    cursor:pointer; align-items:center; justify-content:center;
+  }
+  .btn-more:hover{border-color:var(--blue); color:var(--blue)}
+  .btn-more.is-active{background:var(--blue); border-color:var(--blue); color:#fff}
+  /* forces a flex line-break so the revealed mobile controls start on a fresh row */
+  .tbreak{display:none}
   /* log-to-log prev / position / next, sitting just right of the Reset button */
   .lognav{display:inline-flex; align-items:center; gap:6px}
   .navbtn{
@@ -378,6 +389,16 @@
     /* roomier prev/next targets for thumbs */
     .drawer.is-open .dnavbtn{width:40px; height:40px; font-size:24px}
     .drawer.is-open .dpos{font-size:14px}
+
+    /* collapse the toolbar controls behind the "More" button; search stays visible */
+    .btn-more{display:inline-flex}
+    /* let the search shrink to keep the More button on the same row (e.g. iPhone SE),
+       but not so far that its "Search" placeholder is clipped */
+    .search{flex:1 1 0; min-width:130px; max-width:none}
+    .toolbar .btn, .toolbar .result-count{display:none}
+    .toolbar.show-more .btn{display:inline-flex}
+    .toolbar.show-more .tbreak{display:block; flex-basis:100%; height:0; margin:0}
+    .toolbar.show-more .result-count{display:block; width:100%; margin:2px 0 0}
   }
 </style>
 </head>
@@ -401,6 +422,8 @@
 
 <div class="toolbar">
   <input id="q" class="search" type="search" placeholder="Search summaries, quotes, themes, teachers…" autocomplete="off">
+  <button class="btn-more" id="btnMore" type="button" aria-label="Show filters and options" aria-expanded="false"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="21" x2="14" y1="4" y2="4"/><line x1="10" x2="3" y1="4" y2="4"/><line x1="21" x2="12" y1="12" y2="12"/><line x1="8" x2="3" y1="12" y2="12"/><line x1="21" x2="16" y1="20" y2="20"/><line x1="12" x2="3" y1="20" y2="20"/><line x1="14" x2="14" y1="2" y2="6"/><line x1="8" x2="8" y1="10" y2="14"/><line x1="16" x2="16" y1="18" y2="22"/></svg></button>
+  <span class="tbreak" aria-hidden="true"></span>
   <button class="btn is-active" id="btnFacets">Filters</button>
   <button class="btn" id="btnCols">Columns</button>
   <button class="btn" id="btnReset">Reset</button>
@@ -432,7 +455,7 @@
   <div class="detail-head"><h1>About this spreadsheet</h1></div>
   <div class="detail-main about-page">
     <p>For years, members of the pragmatic dharma community have maintained public journals about their meditation practice. Public practice logs are an opportunity to receive advice and enjoy a sense of community during the long and complicated insight meditation journey. It's also a way to grow humanity's collective knowledge about this mysterious developmental process.</p>
-    <p>I collected these logs from the <a href="http://dharmaoverground.org/" target="_blank" rel="noopener noreferrer">Dharma Overground</a> and <a href="https://awakenetwork.org/forum/kfd-root" target="_blank" rel="noopener noreferrer">Kenneth Folk Dharma</a>, two online forums, and labelled them using Claude Sonnet 5. The labels contain diagnostic conclusions, but they should be taken lightly because the AI labeller lacks expertise and drawing diagnostic conclusions from forum posts is difficult for anybody. The diagnostic criteria are drawn from Daniel Ingram's <a href="https://www.mctb.org/mctb2/table-of-contents/" target="_blank" rel="noopener noreferrer"><em>Mastering the Core Teachings of the Buddha</em></a>, rather than the traditional criteria of <a href="https://vividness.live/sutra-vs-tantra" target="_blank" rel="noopener noreferrer">sutra Buddhism</a>.</p>
+    <p>I collected these logs from the <a href="http://dharmaoverground.org/" target="_blank" rel="noopener noreferrer">Dharma Overground</a> and <a href="https://awakenetwork.org/forum/kfd-root" target="_blank" rel="noopener noreferrer">Kenneth Folk Dharma</a>, two online forums, and labelled them using Claude Sonnet 5. The labels contain diagnostic conclusions, but they should be taken lightly because the AI labeller lacks expertise and drawing diagnostic conclusions from forum posts is difficult for anybody. The diagnostic criteria are drawn from Daniel Ingram's <a href="https://www.mctb.org/mctb2/table-of-contents/" target="_blank" rel="noopener noreferrer"><em>Mastering the Core Teachings of the Buddha</em></a> rather than the traditional criteria of <a href="https://vividness.live/sutra-vs-tantra" target="_blank" rel="noopener noreferrer">sutra Buddhism</a>.</p>
     <p>This spreadsheet was last updated on July 20, 2026. You can discuss this spreadsheet, including any cool posts you stumble across, on <a href="https://www.dharmaoverground.org/discussion/-/message_boards/message/33375910" target="_blank" rel="noopener noreferrer">this thread</a>. You can remix this site via its <a href="https://github.com/johnduality/practice-logs" target="_blank" rel="noopener noreferrer">GitHub page</a>.</p>
     <p>If you have a meditation practice, consider starting a log. I've found it tremendously helpful and enjoyable.</p>
   </div>
@@ -46841,6 +46864,13 @@ document.getElementById("btnFacets").onclick = ()=>{
   const a=document.getElementById("facets"); a.classList.toggle("is-hidden");
   document.getElementById("btnFacets").classList.toggle("is-active", !a.classList.contains("is-hidden"));
 };
+/* Mobile "More": reveal/hide the Filters, Columns, Reset buttons and the result count. */
+document.getElementById("btnMore").onclick = ()=>{
+  const open = document.querySelector(".toolbar").classList.toggle("show-more");
+  const b = document.getElementById("btnMore");
+  b.classList.toggle("is-active", open);
+  b.setAttribute("aria-expanded", open);
+};
 document.getElementById("navPrev").onclick = ()=>navLog(-1);
 document.getElementById("navNext").onclick = ()=>navLog(1);
 document.getElementById("btnReset").onclick = ()=>{
@@ -46874,6 +46904,11 @@ document.addEventListener("keydown", e=>{
 });
 
 buildFacets(); buildCols(); render(); syncAbout();
+/* On phones, start with the filter sidebar collapsed so it doesn't eat the screen. */
+if(window.matchMedia("(max-width:640px)").matches){
+  document.getElementById("facets").classList.add("is-hidden");
+  document.getElementById("btnFacets").classList.remove("is-active");
+}
 </script>
 
 <script>
