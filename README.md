@@ -69,19 +69,20 @@ python3 Tools/build_index.py logs.json index.html
 This is the only build step. It rewrites the `const DATA = [...]` block inside
 `index.html` from `logs.json`; open the page afterward to confirm the row count.
 
-## Privacy & sourcing
+## Copyright & attribution
 
-These logs were written by real people on public meditation forums and often cover
-sensitive, personal ground (mental health, trauma, life circumstances). Out of
-respect for that:
+These logs were written by their individual authors and posted publicly on the
+Dharma Overground and Kenneth Folk Dharma forums; copyright in each post stays with
+its author. This project claims no ownership of that underlying content, and keeps
+its footprint deliberately narrow:
 
-- The **raw scraped logs** (`Data/`) are deliberately **excluded** from this
-  repository via `.gitignore`. What ships is the labelled, summarised dataset
-  (`logs.json`) and the page that renders it.
-- Every record links back to its original public thread, so authors remain
-  attributed to the source they chose to post on.
+- The **raw scraped logs** (`Data/`) are **excluded** from this repository via
+  `.gitignore`. What ships is the labelled dataset (`logs.json`) — short quotations
+  plus machine-generated summaries and tags, offered as commentary and indexing —
+  and the page that renders it, rather than wholesale copies of the original posts.
+- Every record links back to its original public thread to avoid illegal copying.
 
-If you are an author and would like a log removed or amended, please open an issue.
+If you are an author and would like your log removed or amended, please open an issue.
 
 ## Labelling schema
 
