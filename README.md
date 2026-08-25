@@ -78,7 +78,16 @@ repository via `.gitignore`, and what ships is the labelled dataset (`logs.json`
 short quotations plus machine-generated summaries and tags — and the page that
 renders it, rather than the full text of the original posts.
 
-If you are an author and would like your log removed or amended, please open an issue.
+**Opt-outs are honoured.** A log is excluded from the dataset if its author expressed
+that they don't want it processed by AI, republished, or read outside its original
+forum — including requests to delete or privatise the thread, even where the forum never
+acted on the request. Borderline cases are withheld and queued for a human decision in
+`Tools/review_queue.txt` rather than included by default. The screen runs at labelling
+time and is specified in `Tools/subagent_prompt.md`; `RUNBOOK.md` §12 documents the
+workflow.
+
+If you are an author and would like your log removed or amended, please open an issue
+or email johnduality0@gmail.com.
 
 ## Labelling schema
 
@@ -86,6 +95,12 @@ The full field-by-field schema, the diagnostic criteria used for attainment
 labelling, and a worked example live in `Tools/subagent_prompt.md`. In brief, each
 record carries the log's title/URL/source plus labels for author, themes, keywords,
 a one-line summary, an interesting and a helpful quote, claimed vs. estimated
-attainment, techniques, teachers mentioned, map-territory focus, and 1–10 quality
-scores (usefulness, advice quality, practice volume) alongside experience, retreat,
-and "spice" (degree of disagreement) fields.
+attainment, techniques, teachers discussed, the author's own personal teachers,
+map-territory focus, and 1–10 quality scores (usefulness, advice quality, practice
+volume) alongside experience, retreat, and "spice" (degree of disagreement) fields.
+
+Two of those are easy to confuse. **`teachers_mentioned`** ("Teachers discussed" in the
+table) is everyone a log talks about; **`personal_teachers`** is the narrower subset the
+author actually studied under, as distinct from influences they've only read or met once.
+`personal_teachers` was added in July 2026 and so is absent from records labelled before
+then — it is not yet shown as a column; see `RUNBOOK.md` §6a.
